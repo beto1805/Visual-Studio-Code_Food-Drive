@@ -1,5 +1,5 @@
-train_data_path: "Food_Drive_2023_Processed.csv"
-test_data_path: "Food_Drive_2024_Processed.csv"
+train_data_path: "data/processed/Food_Drive_2023_Processed.csv"
+test_data_path: "data/processed/Food_Drive_2024_Processed.csv"
 models_dir: "models/"
 
 random_forest:
@@ -15,7 +15,7 @@ param_grids:
 
 mlflow_experiment_name: "CMPT2500"
 reports_dir: "reports/"
-predictions_output: "predictions/Food_Drive_2024_Predictions.csv"
+predictions_output: "data/predictions/Food_Drive_2024_Predictions.csv"
 feature_importance: true
 feature_columns:
   - "time_spent"

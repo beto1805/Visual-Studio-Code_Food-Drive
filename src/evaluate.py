@@ -32,14 +32,7 @@ class Evaluator:
             
         # Set up mlflow experiment
         mlflow.set_experiment(self.config["mlflow_experiment_name"])
-    def pull_data_with_dvc(self):
-        logging.info("Pulling data from DVC...")
-        try:
-            subprocess.run(["dvc", "pull"], self.test_data_path)
-            logging.info("Data pulled successfully.")
-        except Exception as e:
-            logging.error(f"Error pulling data from DVC: {e}")
-            raise
+    
 
     def load_data(self):
         """Step 1: Load the processed test dataset."""

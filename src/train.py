@@ -27,8 +27,8 @@ class Trainer:
         with open(config_path, "r") as file:
             self.config = yaml.safe_load(file)
 
-        self.train_data_path = os.path.join("data", "processed", self.config["train_data_path"])
-        self.test_data_path = os.path.join("data", "processed", self.config["test_data_path"])
+        self.train_data_path = self.config["train_data_path"]
+        self.test_data_path = self.config["test_data_path"]
 
         self.models_dir = self.config["models_dir"]
         self.train_df = None
@@ -45,14 +45,7 @@ class Trainer:
         self.results_regular = []  # Store results for default models
         self.results_tuned = []  # Store results for tuned models
 
-        # Configure logging
-        logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
-        # Start MLflow Experiment
-        mlflow.set_experiment(self.config["mlflow_experiment_name"])
-
-        # Enable MLflow autologging for Scikit-learn models
-        mlflow.sklearn.autolog()
 
     def load_data(self):
         """Step 1: Load the training and testing datasets."""

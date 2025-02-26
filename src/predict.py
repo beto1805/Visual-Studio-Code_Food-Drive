@@ -91,6 +91,8 @@ class Predictor:
             with mlflow.start_run():
                 mlflow.log_artifact(self.output_path)
                 logging.info("Predictions logged to mlflow.")
+        except PermissionError as e:
+            logging.error(f"Permission denied to write to {output_path}. Try a different directory.")
         except Exception as e:
             logging.error(f"Error saving predictions: {e}")
             
