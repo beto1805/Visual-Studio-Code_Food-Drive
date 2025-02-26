@@ -13,6 +13,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 
 class Trainer:
+
+# Set the path to the service account JSON key file
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/path/to/your/service-account-file.json'
     def __init__(self, config_path: str):
         """
         Initializes the Trainer class with paths to processed data and model saving.
@@ -150,8 +153,8 @@ class Trainer:
             subprocess.run(["dvc", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             
             # Set Git user name and email
-            subprocess.run(["git", "config", "--global", "user.email", "hhong@norquest.ca"], check=True)
-            subprocess.run(["git", "config", "--global", "user.name", "hanghongmy"], check=True)
+            subprocess.run(["git", "config", "--global", "user.email", "you@example.com"], check=True)
+            subprocess.run(["git", "config", "--global", "user.name", "Your Name"], check=True)
             
             # Add and push data to DVC
             subprocess.run(["dvc", "add", self.train_data_path], check=True)
