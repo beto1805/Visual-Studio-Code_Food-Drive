@@ -146,15 +146,25 @@ class Trainer:
     def track_data_with_dvc(self):
         """Step 5: Track processed data with DVC."""
         try:
+            # Check if DVC is installed
+            subprocess.run(["dvc", "--version"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            
+            # Set Git user name and email
+            subprocess.run(["git", "config", "--global", "user.email", "hhong@norquest.ca"], check=True)
+            subprocess.run(["git", "config", "--global", "user.name", "hanghongmy"], check=True)
+            
+            # Add and push data to DVC
             subprocess.run(["dvc", "add", self.train_data_path], check=True)
             subprocess.run(["dvc", "add", self.test_data_path], check=True)
             subprocess.run(["git", "add", "."], check=True)
             subprocess.run(["git", "commit", "-m", "Updated processed dataset"], check=True)
             subprocess.run(["dvc", "push"], check=True)
             logging.info("Step 5: Processed data tracked and pushed with DVC.")
-        except Exception as e:
+        except subprocess.CalledProcessError as e:
             logging.error(f"DVC tracking failed: {e}")
-
+        except FileNotFoundError:
+            logging.error("DVC is not installed. Please install DVC to track data.")
+        
     def train_pipeline(self):
         """Run the full training pipeline."""
         logging.info("Starting training pipeline...")
@@ -166,5 +176,5 @@ class Trainer:
         logging.info("Training pipeline complete.")
 
 if __name__ == "__main__":
-    trainer = Trainer(config_path="configs/train_config.yaml")
+    trainer = Trainer(config_path="configs/predict_config.yaml")
     trainer.train_pipeline()
